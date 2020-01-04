@@ -1,0 +1,81 @@
+extends ../layout
+
+block content
+
+    div.center-block.text-center.col-sm-12
+
+
+        h1 Subscriptions
+
+        hr
+
+        // TOP PAGINATION
+        nav.center-block.text-center(aria-label='Page navigation example')
+            ul.pagination
+                li.page-item
+                    a.page-link(href=`/media/subscribed/${previousNumber}`) <
+
+                each number in numbersArray
+                    li.page-item(class=(number == highlightedNumber) ? 'active' : undefined)
+                        a.page-link(href=`/media/subscribed/${number}`) #{number}
+
+                li.page-item
+                    a.page-link(href=`/media/subscribed/${nextNumber}`) >
+
+
+
+
+    hr
+    if uploads.length == 0
+        h3.text-center Subscribe to a channel to see your subscriptions
+    else
+        br
+        br
+        each upload in uploads
+            if upload.uploader
+                div.col-sm-4(style="text-align:center;height:360px")
+                    include ../viewPartials/uploadThumbnail
+
+                    include ../viewPartials/uploadDetails
+
+
+
+    if uploads.length > 0
+
+        div.center-block.text-center.col-sm-12
+
+                nav.center-block.text-center(aria-label='Page navigation example')
+                    ul.pagination
+                        li.page-item
+                            a.page-link(href=`/media/subscribed/${previousNumber}`) <
+
+                        each number in numbersArray
+                            li.page-item(class=(number == highlightedNumber) ? 'active' : undefined)
+                                a.page-link(href=`/media/subscribed/${number}`) #{number}
+
+                        li.page-item
+                            a.page-link(href=`/media/subscribed/${nextNumber}`) >
+
+
+    script.
+      balanceText();
+
+    script.
+      $(document).on({
+        mouseenter: function () {
+          var width = $(this).width()
+          var height = $(this).height()
+
+
+          $(this).css("width", width * 1.10);
+          $(this).css("height", height * 1.10);
+
+        },
+        mouseleave: function () {
+          var width = $(this).width()
+          var height = $(this).height()
+
+          $(this).css("width", width / 1.10);
+          $(this).css("height", height / 1.10);
+        }
+      }, '.preview-image');

@@ -1,0 +1,126 @@
+extends ../layout
+
+block content
+    div
+        div.col-sm-12.text-center(style="margin:0 auto;")
+            h2
+            h2(style="display:inline;") Search For Keyword
+            br
+            br
+            div(style="margin: 0 auto;")
+                input(type='hidden', name='_csrf', value=_csrf )
+                input.search-query-input.form-control(style="margin: 0 auto;width:400px" type='search', name='search', id='search' placeholder=`${searchQuery !== 'undefined' ? searchQuery: ''}`)
+                br
+                button.search-uploads-button.btn-lg.btn.btn-primary(type='submit' style="margin-right:10px" name="type" value="upload")
+                    //i.fa.fa-lock
+                    | Search For Media
+
+                button.search-users-button.btn-lg.btn.btn-primary(type='submit' style="margin-left:10px" name="type" value="user")
+                    //i.fa.fa-lock
+                    | Search For User
+
+
+
+        // UPLOADS RESULTS
+        br
+        div.col-sm-12.text-center(style="margin:0 auto;margin-top:50px;")
+            if uploads
+                div.text-center.center-div
+
+                    include ../viewPartials/orderByDropdown
+
+                    include ../viewPartials/searchUploadsFileTypeDropdown
+
+                    include ../viewPartials/sensitivityFilterDropdown
+                br
+                br
+
+                include ../viewPartials/searchPagination
+
+                p(style="text-decoration:underline;font-size:20px;") #{totalUploadsAmount} Results
+
+                if uploads && uploads.length > 0
+                    each upload in uploads
+                      if upload.uploader
+                          div.col-sm-4(style="text-align:center;height:360px")
+                              include ../viewPartials/uploadThumbnail
+
+                              include ../viewPartials/uploadDetails
+
+
+
+        // USERS RESULTS
+        div.col-sm-12.text-center(style="margin:0 auto;")
+            if channels
+                if channels.length > 0
+                    p(style="text-decoration:underline;font-size:20px;")  Results
+                    each channel in channels
+                        div.col-sm-4(style="text-align:center;height:360px")
+                            a(href=`/user/${channel.channelUrl}` style="color:black")
+                                if channel.customThumbnail
+                                    img.center-block.text-center(src=`${uploadServer}/${channel.channelUrl}/${channel.customThumbnail}` width="256px" height="168px")
+                                else
+                                    img.center-block.text-center(src='/images/no_img.png' width="256px" height="168px")
+
+
+                                div
+                                    p.upload-title-text Channel Username: #{channel.channelUrl}
+                                    p.upload-title-text Channel Name: #{channel.channelName}
+                                br
+
+                            div.upload-details
+                                div.views
+                                    p.views-text #{channel.uploads.length} Uploads
+
+                else
+                    div.center-block.text-center
+                        br
+                        br
+                        p(style="font-size:20px") No Results Found
+
+
+    script.
+      $(document).ready(function () {
+
+        var orderBy = '#{orderBy}'
+        var mediaType = '#{mediaType}'
+        var searchQuery = '#{searchQuery}'
+        var searchType = '#{searchType}' // upload or user
+
+        if(!orderBy){
+          orderBy = 'newToOld'
+        }
+
+
+        console.log(orderBy, mediaType, searchQuery, searchType)
+
+        $('.search-query-input').focus();
+
+
+        // capture submit
+        $('.search-uploads-button').click(function () {
+
+          var userSearchQuery = $('.search-query-input').val()
+
+          window.location = '/search?orderBy=' + orderBy + '&mediaType=' + mediaType + '&searchQuery=' + userSearchQuery + '&searchType=' + searchType
+        });
+
+        $('.search-users-button').click(function () {
+          var userSearchQuery = $('.search-query-input').val()
+
+          window.location = `/search?searchType=user&searchQuery=${userSearchQuery}`
+        })
+
+          $(document).keypress(function (e) {
+          if (e.which == 13) {
+            var searchQuery = $('.search-query-input').val()
+
+            window.location = '/search?orderBy=' + orderBy + '&mediaType=' + mediaType + '&searchQuery=' + searchQuery + '&searchType=upload'
+          }
+        });
+      })
+
+
+    include ../viewPartials/changeSensitivityFilterJs
+
+    include ../viewPartials/mouseOverJavascript

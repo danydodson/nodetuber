@@ -1,0 +1,33 @@
+{
+  "name": "nodetube-deploy",
+  "description": "Open-source YouTube alternative that also supports image and audio uploads. Powered by NodeJS ",
+  "website": "https://github.com/mayeaux/nodetube",
+  "repository": "https://github.com/mayeaux/nodetube",
+  "success_url": "/",
+  "keywords": [
+    "youtube",
+    "soundcloud",
+    "imgur"
+  ],
+  "addons": [
+    "papertrail",
+    "heroku-redis",
+    "mongolab"
+  ],
+  "env": {
+    "NODE_ENV": {
+      "description": "production",
+      "value": "production",
+      "required": "true"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+    }
+  ],
+  "generator": "https://www.expeditedssl.com/heroku-button-maker"
+}

@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+    div
+        div
+            h2
+            h2.view-header Reacts (Admin)
+        hr
+        each react in reacts
+            p
+                a(href=`/uploads/${react.user.channelUrl}/${react.upload.uniqueTag}`) Upload Title #{react.upload.title}
+            p Channel Name #{react.upload.uploader.channelUrl}
+            p Reacter : #{react.user.channelUrl}
+            p Reaction: #{react.react}
+
+            br
+            br

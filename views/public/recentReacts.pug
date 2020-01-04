@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+    div
+        div.row
+            div.col-sm-3
+                h3
+                    a(href="/media/recent") Recently Uploaded
+            div.col-sm-3
+                h3
+                    a(href="/media/recentComments") Recent Comments
+            div.col-sm-3
+                h3
+                    a(href="/media/recentViews") Recent Views
+            div.col-sm-3
+                h3
+                    a(href="/media/recentReacts") Recent Reacts
+
+        hr
+
+        div.center-block.text-center.col-sm-12
+            h1= recentActionDisplayName
+            include ../viewPartials/recentActionPagination
+
+            each document in documents
+                if document.upload.uploader
+                    div.col-sm-4(style="text-align:center;height:380px")
+                        // NEW CHANNEL UPLOAD FORMAT
+                        a.title-anchor(href=`/user/${document.upload.uploader.channelUrl}/${document.upload.uniqueTag}`)
+                            // TODO: Sub out thumbnail here
+                            include ../viewPartials/recentActionThumbnail
+
+                        include ../viewPartials/recentActionUploadDetails
+
+
+            if documents && documents.length > 0
+                include ../viewPartials/recentActionPagination
+
+    include ../viewPartials/mouseOverJavascript
