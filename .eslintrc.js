@@ -36,19 +36,21 @@ module.exports = {
             "error",
             { "max": 1, "maxEOF": 1 }
         ],
-        "keyword-spacing": ["error", {
-            "before": false, "after": false, "overrides": {
-                "else": { "before": true, "after": true },
-                "try": { "before": true, "after": true },
-                "catch": { "before": true, "after": false },
-                "const": { "before": true, "after": true }
-            }
-        }],
-        "space-before-function-paren": ["error", "never"],
-        "space-before-blocks": ["error", "never"],
+        // "keyword-spacing": ["error", {
+        // "before": false, "after": false, "overrides": {
+        // "if": { "before": true, "after": true },
+        // "else": { "before": true, "after": true },
+        // "try": { "before": true, "after": true },
+        // "catch": { "before": true, "after": false },
+        // "const": { "before": true, "after": true }
+        // }
+        // }],
+        // "space-before-function-paren": ["error", "never"],
+        // "space-before-blocks": ["error", "never"],
         "operator-assignment": ["error", "never"],
         "spaced-comment": ["error", "always", { "exceptions": ["*"], "block": { "balanced": true } }],
         // "comma-dangle": ["error", "never"],
+        "semi": 0,
         "comma-dangle": 0,
         "no-useless-escape": 0,
         "no-console": 0,
