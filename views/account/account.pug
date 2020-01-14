@@ -77,22 +77,22 @@ block content
       cursor: pointer;
     }
 
-  //form(action='https://www.paypal.com/cgi-bin/webscr', method='post')
+  //form(action='https://www.paypal.com/cgi-bin/webscr' method='post')
   //  // Identify your business so that you can collect the payments.
-  //  input(type='hidden', name='business', value='ceo@pew.tube')
+  //  input(type='hidden' name='business' value='ceo@pew.tube')
   //  // Specify a Subscribe button.
-  //  input(type='hidden', name='cmd', value='_xclick-subscriptions')
+  //  input(type='hidden' name='cmd' value='_xclick-subscriptions')
   //  // Identify the subscription.
-  //  input(type='hidden', name='item_name', value="Recurring PewTube Account Top-Up")
-  //  //input(type='hidden', name='item_number', value='Purchase Acount Top-Up')
+  //  input(type='hidden' name='item_name' value="Recurring PewTube Account Top-Up")
+  //  //input(type='hidden' name='item_number' value='Purchase Acount Top-Up')
   //  // Set the terms of the regular subscription.
-  //  input(type='hidden', name='a3', value='5.00')
-  //  input(type='hidden', name='p3', value='1')
-  //  input(type='hidden', name='t3', value='M')
+  //  input(type='hidden' name='a3' value='5.00')
+  //  input(type='hidden' name='p3' value='1')
+  //  input(type='hidden' name='t3' value='M')
   //  // Set recurring payments until canceled.
-  //  input(type='hidden', name='src', value='1')
+  //  input(type='hidden' name='src' value='1')
   //  // Provide a drop-down menu option field.
-  //  input(type='hidden', name='on0', value='Format')
+  //  input(type='hidden' name='on0' value='Format')
   //  | Format
   //  br
   //  select(name='os0')
@@ -101,8 +101,8 @@ block content
   //    option(value='HTML') HTML
   //  br
   //  // Display the payment button.
-  //  input(type='image', name='submit', src='https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_subscribe_113x26.png', alt='Subscribe')
-  //  img(alt='', width='1', height='1', src='https://www.paypalobjects.com/en_US/i/scr/pixel.gif')
+  //  input(type='image' name='submit' src='https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_subscribe_113x26.png' alt='Subscribe')
+  //  img(alt='' width='1' height='1' src='https://www.paypalobjects.com/en_US/i/scr/pixel.gif')
 
 
 
@@ -197,7 +197,7 @@ block content
         .form-group
           label.col-sm-3.control-label(for='youtubeChannelId') YouTube Username Or Channel ID
           .col-sm-7
-            input.form-control(type='youtubeChannelId', name='youtubeChannelId', id='youtubeChannelId')
+            input.form-control(type='youtubeChannelId' name='youtubeChannelId' id='youtubeChannelId')
         .form-group
           .col-sm-offset-3.col-sm-4
             button.btn.btn-primary.saveChannelId(type='submit')
@@ -209,7 +209,7 @@ block content
         div.form-group.disabled
           label.col-sm-3.control-label(for='youtubeChannelId') Status
           .col-sm-7.disabled
-            input.disable(type='checkbox', disabled='', data-toggle='toggle')
+            input.disable(type='checkbox' disabled='' data-toggle='toggle')
 
     else
       div(style="text-align:center")
@@ -220,9 +220,9 @@ block content
         label.control-label(for='updateStatus') Status
         br
         if user.userSettings.backupOn == false
-          input(id="toggle-event" type='checkbox', data-toggle='toggle')
+          input(id="toggle-event" type='checkbox' data-toggle='toggle')
         else if user.userSettings.backupOn == true
-          input(id="toggle-event" type='checkbox', checked='', data-toggle='toggle')
+          input(id="toggle-event" type='checkbox' checked='' data-toggle='toggle')
         div(id="console-event")
 
   br
@@ -247,7 +247,7 @@ block content
     .form-group
       label.col-sm-3.control-label(for='channelName') Channel Display Name
       .col-sm-7
-        input.form-control(type='text', name='channelName', id='channelName', minlength=3, maxlength=25, value=user.channelName)
+        input.form-control(type='text' name='channelName' id='channelName', minlength=3, maxlength=25, value=user.channelName)
 
     .form-group
       label.col-sm-3.control-label(for='channelName') Channel Description
@@ -294,7 +294,7 @@ block content
 
 
       form.delete-user-thumbnail-form(action=`${thumbnailServer}/api/channel/thumbnail/delete` method="POST")
-        input(type='hidden', name='_csrf', value=_csrf)
+        input(type='hidden' name='_csrf', value=_csrf)
         input(type="hidden" name="channelUrl" value=`${user.channelUrl}`)
         input(type="hidden" name="uploadToken" value=`${user.uploadToken}`)
 
@@ -305,8 +305,8 @@ block content
   if user.email && user.emailConfirmed
     h3.text-center Confirmed Email
       br
-    form.form-horizontal(action='/account/email', method='POST')
-      input(type='hidden', name='_csrf', value=_csrf)
+    form.form-horizontal(action='/account/email' method='POST')
+      input(type='hidden' name='_csrf', value=_csrf)
       .form-group
         label.col-sm-3.control-label(for='email') Email Address
         .col-sm-7
@@ -315,12 +315,12 @@ block content
   if user.email && !user.emailConfirmed
     h3.text-center Save Email
       br
-    form.form-horizontal(action='/account/email', method='POST')
-      input(type='hidden', name='_csrf', value=_csrf)
+    form.form-horizontal(action='/account/email' method='POST')
+      input(type='hidden' name='_csrf', value=_csrf)
       .form-group
         label.col-sm-3.control-label(for='email') Email Address
         .col-sm-7
-          input.form-control(type='email', name='email', id='email' value=`${user.email}`)
+          input.form-control(type='email' name='email' id='email' value=`${user.email}`)
       .form-group
         .col-sm-offset-3.col-sm-4
           button.btn.btn-primary(type='submit')
@@ -330,12 +330,12 @@ block content
   if !user.email
     h3.text-center Save Email
       br
-    form.form-horizontal(action='/account/email', method='POST')
-      input(type='hidden', name='_csrf', value=_csrf)
+    form.form-horizontal(action='/account/email' method='POST')
+      input(type='hidden' name='_csrf', value=_csrf)
       .form-group
         label.col-sm-3.control-label(for='email') Email Address
         .col-sm-7
-          input.form-control(type='email', name='email', id='email')
+          input.form-control(type='email' name='email' id='email')
       .form-group
         .col-sm-offset-3.col-sm-4
           button.btn.btn-primary(type='submit')
@@ -345,16 +345,16 @@ block content
   h3.text-center Change Password
   br
 
-  form.form-horizontal(action='/account/password', method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
+  form.form-horizontal(action='/account/password' method='POST')
+    input(type='hidden' name='_csrf', value=_csrf)
     .form-group
       label.col-sm-3.control-label(for='password') New Password
       .col-sm-7
-        input.form-control(type='password', name='password', id='password')
+        input.form-control(type='password' name='password' id='password')
     .form-group
       label.col-sm-3.control-label(for='confirmPassword') Confirm Password
       .col-sm-7
-        input.form-control(type='password', name='confirmPassword', id='confirmPassword')
+        input.form-control(type='password' name='confirmPassword' id='confirmPassword')
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn-primary(type='submit')
@@ -481,24 +481,24 @@ block content
     //    });
 
 
-        // TODO: Post this guy to the backend
-    //      }
-    //    });
-    document.getElementById('customButton').addEventListener('click', function (e) {
-      // Open Checkout with further options:
-      handler.open({
-        name: 'NodeTube, Inc.',
-        description: 'One Month Of NodeTube Plus',
-        amount: 495,
-        allowRememberMe: false
-        // email: "customer@email.com"
+      // TODO: Post this guy to the backend
+      //      }
+      //    });
+      document.getElementById('customButton').addEventListener('click', function (e) {
+        // Open Checkout with further options:
+        handler.open({
+          name: 'NodeTube, Inc.',
+          description: 'One Month Of NodeTube Plus',
+          amount: 495,
+          allowRememberMe: false
+          // email: "customer@email.com"
+        });
+        e.preventDefault();
       });
-      e.preventDefault();
-    });
-    // Close Checkout on page navigation:
-    window.addEventListener('popstate', function () {
-      handler.close();
-    });
+      // Close Checkout on page navigation:
+      window.addEventListener('popstate', function () {
+        handler.close();
+      });
 
 
 

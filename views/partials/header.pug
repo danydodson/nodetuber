@@ -1,7 +1,7 @@
 .navbar.navbar-default.navbar-fixed-top(style="background-color:rgb(24,55,147)")
   .container
     .navbar-header
-      button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+      button.navbar-toggle(type='button' data-toggle='collapse' data-target='.navbar-collapse')
         span.sr-only Toggle navigation
         span.icon-bar
         span.icon-bar
@@ -32,7 +32,7 @@
           // support dropdown
           if user.role == 'support' || user.role == 'admin'
             li.dropdown(class=(title == 'Admin Panel') ? 'active' : undefined)
-              a.dropdown-toggle(href='#', data-toggle='dropdown')
+              a.dropdown-toggle(href='#' data-toggle='dropdown')
                 span= 'Support'
                 i.caret
               ul.dropdown-menu
@@ -42,7 +42,7 @@
           // moderator dropdown
           if user.role == 'moderator' || user.role == 'admin'
             li.dropdown(class=(title == 'Admin Panel') ? 'active' : undefined)
-              a.dropdown-toggle(href='#', data-toggle='dropdown')
+              a.dropdown-toggle(href='#' data-toggle='dropdown')
                 span= 'Moderator'
                 i.caret
               ul.dropdown-menu
@@ -56,7 +56,7 @@
           // admin dropdown
           if user.role == 'admin'
             li.dropdown(class=(title == 'Admin Panel') ? 'active' : undefined)
-              a.dropdown-toggle(href='#', data-toggle='dropdown')
+              a.dropdown-toggle(href='#' data-toggle='dropdown')
                 span= 'Admin Panel'
                 i.caret
               ul.dropdown-menu
@@ -101,7 +101,7 @@
           li.hidden-md.hidden-lg.hidden-sm
             a(href=`/logout`) Logout
           li.dropdown(class=(title == 'Account Management') ? 'active' : undefined)
-            a.dropdown-toggle(href='#', data-toggle='dropdown')
+            a.dropdown-toggle(href='#' data-toggle='dropdown')
               span #{user.channelName || user.channelUrl } (#{unreadNotifAmount}) &nbsp
               i.caret
             ul.dropdown-menu

@@ -16,14 +16,14 @@ block content
             div.display-div(style="min-width:50%;min-height:50%;margin:0 auto;")
                 // TODO: Sub out thumbnail here
 
-                video#media_player.display-element(poster=`${uploadServer}/${upload.uploader.channelUrl}/${upload.thumbnails.generated || upload.thumbnails.medium}` controls='', style="max-width:100%;background-color:black;")
+                video#media_player.display-element(poster=`${uploadServer}/${upload.uploader.channelUrl}/${upload.thumbnails.generated || upload.thumbnails.medium}` controls='' style="max-width:100%;background-color:black;")
                     // to
                     source.video-source(src=`${uploadServer}/${upload.uploader.channelUrl}/${upload.uniqueTag}.mp4`, type='video/mp4')
                     //source(src=upload.uploadUrl, type='video/mp4')
 
         else if upload.fileType === 'audio'
             div
-                audio#media_player.my_audio(style="width:80%;" controls='', preload='none')
+                audio#media_player.my_audio(style="width:80%;" controls='' preload='none')
 
                     if upload.fileExtension == '.m4a'
                         source(src=`${uploadServer}/${upload.uploader.channelUrl}/${upload.uniqueTag}${upload.fileExtension}`, type='audio/mp4')
@@ -80,11 +80,11 @@ block content
 
             if upload.quality && upload.quality.high
                 div.dropdown
-                    button#dropdownMenu1.btn.btn-primary.dropdown-toggle(type='button', data-toggle='dropdown' style="border-radius:4px;" quality="low")
+                    button#dropdownMenu1.btn.btn-primary.dropdown-toggle(type='button' data-toggle='dropdown' style="border-radius:4px;" quality="low")
                         | Quality: Low
                         span.caret
 
-                    ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu1' style="cursor:pointer;")
+                    ul.dropdown-menu(role='menu' aria-labelledby='dropdownMenu1' style="cursor:pointer;")
                         li(role='presentation')
                             a.low-quality Low
                         li(role='presentation')
@@ -201,9 +201,9 @@ block content
             div
 
                 a(href=`https://www.facebook.com/sharer/sharer.php?u=${url}` target="_blank")
-                    img(src='/images/facebook-share.jpg', width='100', height='30', alt='Share on Twitter')
+                    img(src='/images/facebook-share.jpg' width='100' height='30' alt='Share on Twitter')
                 a(href=`https://twitter.com/share?url=${url}` target="_blank")
-                    img(src='/images/twitter-share.jpg', width='100', height='30', alt='Share on Twitter')
+                    img(src='/images/twitter-share.jpg' width='100' height='30' alt='Share on Twitter')
                 a(href=`mailto:?subject=Check out this ${upload.fileType}&body=Check out this ${upload.fileType} on NodeTube: ${url}`, title='Share by Email')
                     img(src='/images/email-share.jpg')
 
@@ -227,8 +227,8 @@ block content
                     if !viewingUserIsBlocked
                         // comment form
                         div.comment-form.form-group
-                            form.form-horizontal.overall-comment-form(class="comment-form" action='/api/comment', method='post')
-                                input(type='hidden', name='_csrf', value=_csrf)
+                            form.form-horizontal.overall-comment-form(class="comment-form" action='/api/comment' method='post')
+                                input(type='hidden' name='_csrf', value=_csrf)
                                 label(for="comment" style="font-size:17px;") Enter Comment
                                 br
                                 input(type="hidden" name="upload" id="upload" value=upload._id)
@@ -291,8 +291,8 @@ block content
 
                                             // container that appears after you hit Reply
                                             div.reply-container(style="display:none")
-                                                form.form-horizontal.reply-comment-form(class="comment-form" action='/api/comment', method='post')
-                                                    input(type='hidden', name='_csrf', value=_csrf)
+                                                form.form-horizontal.reply-comment-form(class="comment-form" action='/api/comment' method='post')
+                                                    input(type='hidden' name='_csrf', value=_csrf)
                                                     input(type="hidden" name="upload" id="upload" value=upload._id)
                                                     input(type="hidden" name="commentId" id="commentId" value=comment.id)
                                                     textarea(name="comment" id="comment" minlength="2" style="width:400px;max-width:100%;")
@@ -312,8 +312,8 @@ block content
                                                         p(style="text-align:left;") #{responseComment.text}
 
                                                     //div.reply-container(style="display:none")
-                                                    //    form.form-horizontal.reply-form(class="comment-form" action='/api/comment', method='post')
-                                                    //        input(type='hidden', name='_csrf', value=_csrf)
+                                                    //    form.form-horizontal.reply-form(class="comment-form" action='/api/comment' method='post')
+                                                    //        input(type='hidden' name='_csrf', value=_csrf)
                                                     //        input(type="hidden" name="upload" id="upload" value=upload._id)
                                                     //        input(type="hidden" name="commentId" id="commentId" value=responseComment.id)
                                                     //        textarea(name="comment" id="comment" style="width:400px;")
@@ -332,94 +332,94 @@ block content
 
 
 block extra_js
-  script(src='https://checkout.stripe.com/checkout.js')
-  script(src="https://cdnjs.cloudflare.com/ajax/libs/autolinker/1.4.4/Autolinker.js")
+    script(src='https://checkout.stripe.com/checkout.js')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/autolinker/1.4.4/Autolinker.js")
 
 
 block extra_css
-  link(rel="stylesheet" href="https://cdn.plyr.io/3.3.21/plyr.css")
-  style.
-    .pewtube-pro {
-        background: #edeeee;
-        font-weight: 400;
-        font-size: 13px;
-        margin-left: 3px;
-        padding: 8px 9px;
-        display: inline-block;
-        border-radius: 3px;
-        transform: translateY(-2px);
-    }
+    link(rel="stylesheet" href="https://cdn.plyr.io/3.3.21/plyr.css")
+    style.
+        .pewtube-pro {
+            background: #edeeee;
+            font-weight: 400;
+            font-size: 13px;
+            margin-left: 3px;
+            padding: 8px 9px;
+            display: inline-block;
+            border-radius: 3px;
+            transform: translateY(-2px);
+        }
 
-    .dropdown {
-        text-align: center;
-    }
+        .dropdown {
+            text-align: center;
+        }
 
-    .button, .dropdown-menu {
-        margin: 10px auto
-    }
+        .button, .dropdown-menu {
+            margin: 10px auto
+        }
 
-    .dropdown-menu {
-        width: 200px;
-        left: 50%;
-        margin-left: -100px;
-        margin-top: 0px;
-    }
+        .dropdown-menu {
+            width: 200px;
+            left: 50%;
+            margin-left: -100px;
+            margin-top: 0px;
+        }
 
 
 block extra_footer_js
-  script(src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js")
-  script(src="https://cdn.plyr.io/3.3.21/plyr.js")
-  script.
-    var clipboard = new ClipboardJS('.copy-button');
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js")
+    script(src="https://cdn.plyr.io/3.3.21/plyr.js")
+    script.
+        var clipboard = new ClipboardJS('.copy-button');
 
-    clipboard.on('success', function (e) {
-      swal('The text has been copied to your clipboard')
-    });
+        clipboard.on('success', function (e) {
+            swal('The text has been copied to your clipboard')
+        });
 
 
-  script(src="/js/media.js")
+    script(src="/js/media.js")
 
-  script.
-    balanceText();
+    script.
+        balanceText();
 
-  // reportUploadFunctionalityJs
+    // reportUploadFunctionalityJs
 
-  include ./mediaPlayerPartials/reportUploadFunctionalityJs
+    include ./mediaPlayerPartials/reportUploadFunctionalityJs
 
-  include ./mediaPlayerPartials/changeQualityJs
+    include ./mediaPlayerPartials/changeQualityJs
 
-  include ./mediaPlayerPartials/changeUserDefaultQualityJs
+    include ./mediaPlayerPartials/changeUserDefaultQualityJs
 
-  include mediaPlayerPartials/creditFunctionalityJs
+    include mediaPlayerPartials/creditFunctionalityJs
 
-  if user
-    include mediaPlayerPartials/deleteCommentAndBlockUnblockUserJs
+    if user
+        include mediaPlayerPartials/deleteCommentAndBlockUnblockUserJs
 
-  include mediaPlayerPartials/subscribeFunctionalityJs
+    include mediaPlayerPartials/subscribeFunctionalityJs
 
-  include mediaPlayerPartials/sensitiveFunctionalityJs
+    include mediaPlayerPartials/sensitiveFunctionalityJs
 
-  include mediaPlayerPartials/plyrAndAutoplayFunctionalityJs
+    include mediaPlayerPartials/plyrAndAutoplayFunctionalityJs
 
-  include mediaPlayerPartials/embedLinkFunctionalityJs
+    include mediaPlayerPartials/embedLinkFunctionalityJs
 
-  include ./mediaPlayerPartials/downloadFunctionalityJs
+    include ./mediaPlayerPartials/downloadFunctionalityJs
 
-  include ./mediaPlayerPartials/repeatFunctionalityJs
+    include ./mediaPlayerPartials/repeatFunctionalityJs
 
-  include ./mediaPlayerPartials/reactFunctionalityJs
+    include ./mediaPlayerPartials/reactFunctionalityJs
 
-  script.
-    var myTextEl = document.getElementById('descriptionText');
-    if (myTextEl)
-    {
-      myTextEl.innerHTML = Autolinker.link(myTextEl.innerHTML);
-    }
+    script.
+        var myTextEl = document.getElementById('descriptionText');
+        if (myTextEl)
+        {
+            myTextEl.innerHTML = Autolinker.link(myTextEl.innerHTML);
+        }
 
-  if user
-      script.
-        var user = '#{user.id}'
-  else
-      script.
-        var user = undefined
+    if user
+        script.
+            var user = '#{user.id}'
+    else
+        script.
+            var user = undefined
 

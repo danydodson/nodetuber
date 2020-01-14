@@ -4,7 +4,7 @@ const categories = [
     displayName: 'Comedy',
     subcategories: [
       { name: 'pranks', displayName: 'Pranks' },
-      { name: 'political', displayName: 'Political'}
+      { name: 'political', displayName: 'Political' }
     ]
   },
   {
@@ -17,7 +17,7 @@ const categories = [
     displayName: 'Health And Wellness',
     subcategories: [
       { name: 'yogaAndMeditation', displayName: 'Yoga & Meditation' },
-      { name: 'fitness', displayName: 'Fitness'}
+      { name: 'fitness', displayName: 'Fitness' }
     ]
   },
   {
@@ -25,7 +25,7 @@ const categories = [
     displayName: 'Technology & Science',
     subcategories: [
       { name: 'blockchain', displayName: 'Blockchain' },
-      { name: 'internet', displayName: 'Internet'}
+      { name: 'internet', displayName: 'Internet' }
     ]
   },
   {
@@ -48,7 +48,7 @@ const categories = [
     displayName: 'Politics',
     subcategories: [
       { name: 'leftwing', displayName: 'Leftwing' },
-      { name: 'rightwing', displayName: 'Rightwing'}
+      { name: 'rightwing', displayName: 'Rightwing' }
     ]
   },
   {
@@ -56,6 +56,6 @@ const categories = [
     displayName: 'Uncategorized',
     subcategories: []
   }
-];
+]
 
-module.exports = categories;
+module.exports = categories

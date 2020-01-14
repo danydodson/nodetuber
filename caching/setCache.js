@@ -1,115 +1,114 @@
-const Upload = require('../models/index').Upload;
-const View = require('../models/index').View;
-const User = require('../models/index').User;
-const Subscription = require('../models/index').Subscription;
-const React = require('../models/index').React;
-const Comment = require('../models/index').Comment;
-const SiteVisit = require('../models/index').SiteVisit;
-const SearchQuery = require('../models/index').SearchQuery;
+const Upload = require('../models/index').Upload
+const View = require('../models/index').View
+const User = require('../models/index').User
+const Subscription = require('../models/index').Subscription
+const React = require('../models/index').React
+const Comment = require('../models/index').Comment
+const SiteVisit = require('../models/index').SiteVisit
+const SearchQuery = require('../models/index').SearchQuery
 
-const _ = require('lodash');
+const _ = require('lodash')
 
-const moment = require('moment');
+const moment = require('moment')
 
-const redisClient = require('../config/redis');
+const redisClient = require('../config/redis')
 
-const c = {
-  l : console.log
-};
+const c = { l: console.log }
 
-const logCaching = process.env.LOG_CACHING;
+const logCaching = process.env.LOG_CACHING
 
-let viewAmount, channelAmount, mediaAmount;
-async function setIndexValues(){
+let viewAmount, channelAmount, mediaAmount
+async function setIndexValues() {
 
-  if(logCaching == 'true'){
-    console.log('Setting index values');
+  if (logCaching == 'true') {
+    console.log('Setting index values')
 
-    console.log('Calculating view amounts');
+    console.log('Calculating view amounts')
   }
 
   // view amount is for the old view amount
   viewAmount = await Upload.aggregate([
-    { $match:  {visibility: { $ne: 'removed' } }},
-    { $group: {
-      _id: '',
-      views: { $sum: '$views' }
-    }
-    }]);
+    { $match: { visibility: { $ne: 'removed' } } },
+    {
+      $group: {
+        _id: '',
+        views: { $sum: '$views' }
+      }
+    }])
 
-  if(!viewAmount[0]){
-    viewAmount = 0;
+  if (!viewAmount[0]) {
+    viewAmount = 0
   } else {
-    viewAmount = viewAmount[0].views;
+    viewAmount = viewAmount[0].views
   }
 
-  if(logCaching == 'true'){
-    console.log('Old view amount calculated, calculating channel amount');
+  if (logCaching == 'true') {
+    console.log('Old view amount calculated, calculating channel amount')
   }
 
-  channelAmount = await User.countDocuments({});
+  channelAmount = await User.countDocuments({})
 
-  if(logCaching == 'true'){
-    console.log('Channel amount calculated, calculating upload amount');
+  if (logCaching == 'true') {
+    console.log('Channel amount calculated, calculating upload amount')
   }
 
-  mediaAmount = await Upload.countDocuments({});
+  mediaAmount = await Upload.countDocuments({})
 
-  if(logCaching == 'true'){
-    console.log('Upload amount calculated, calculating view amount');
+  if (logCaching == 'true') {
+    console.log('Upload amount calculated, calculating view amount')
   }
 
-  const legitCheckedViews = await View.countDocuments({ validity: 'real' });
+  const legitCheckedViews = await View.countDocuments({ validity: 'real' })
 
-  if(logCaching == 'true'){
-    console.log('Legit view amount calculated, setting redis amounts');
+  if (logCaching == 'true') {
+    console.log('Legit view amount calculated, setting redis amounts')
   }
 
-  viewAmount = viewAmount + legitCheckedViews;
+  viewAmount = viewAmount + legitCheckedViews
 
   // set object properly
   redisClient.hmset('indexValues', {
     viewAmount,
     channelAmount,
     mediaAmount
-  });
+  })
 
-  if(logCaching == 'true'){
-    console.log('Set index values');
+  if (logCaching == 'true') {
+    console.log('Set index values')
   }
 
 }
 
-// setTimeout(setIndexValues, 1000 * 60 * 2);
+// setTimeout(setIndexValues, 1000 * 60 * 2)
 //
 // setInterval(function(){
 //   setIndexValues()
-// }, 1000 * 60 * 20);
+// }, 1000 * 60 * 20)
 
 // TODO: refactor to do via count
-async function getAmountsPerPeriods(Model, objectName){
+async function getAmountsPerPeriods(Model, objectName) {
 
-  const totalDocumentAmount = await Model.countDocuments({});
+  const totalDocumentAmount = await Model.countDocuments({})
 
-  if(logCaching == 'true'){
-    console.log(`Got total ${objectName} counted`);
+  if (logCaching == 'true') {
+    console.log(`Got total ${objectName} counted`)
   }
 
   // build dates
-  var monthAgo =  moment().subtract(30, 'days').toDate();
-  var weekAgo =  moment().subtract(7, 'days').toDate();
-  var dayAgo = moment().subtract(24, 'hours').toDate();
-  var hourAgo = moment().subtract(1, 'hours').toDate();
-  var minuteAgo = moment().subtract(1, 'minutes').toDate();
+  var monthAgo = moment().subtract(30, 'days').toDate()
+  var weekAgo = moment().subtract(7, 'days').toDate()
+  var dayAgo = moment().subtract(24, 'hours').toDate()
+  var hourAgo = moment().subtract(1, 'hours').toDate()
+  var minuteAgo = moment().subtract(1, 'minutes').toDate()
 
   // find the views
-  const lastMonthAmount= await Model.countDocuments({ createdAt: { $gte: monthAgo } });
-  const lastWeekAmount = await Model.countDocuments({ createdAt: { $gte: weekAgo } });
-  const lastDayAmount = await Model.countDocuments({ createdAt: { $gte: dayAgo } });
-  const lastHourAmount = await Model.countDocuments({ createdAt: { $gte: hourAgo } });
-  const lastMinuteAmount = await Model.countDocuments({ createdAt: { $gte: minuteAgo } });
+  const lastMonthAmount = await Model.countDocuments({ createdAt: { $gte: monthAgo } })
+  const lastWeekAmount = await Model.countDocuments({ createdAt: { $gte: weekAgo } })
+  const lastDayAmount = await Model.countDocuments({ createdAt: { $gte: dayAgo } })
+  const lastHourAmount = await Model.countDocuments({ createdAt: { $gte: hourAgo } })
+  const lastMinuteAmount = await Model.countDocuments({ createdAt: { $gte: minuteAgo } })
 
-  return{
+  return {
     name: objectName,
     alltime: totalDocumentAmount,
     month: lastMonthAmount,
@@ -117,106 +116,106 @@ async function getAmountsPerPeriods(Model, objectName){
     day: lastDayAmount,
     hour: lastHourAmount,
     minute: lastMinuteAmount
-  };
+  }
 }
 
 // async function testThing(){
-//   const uploads = await Upload.find({}).select('createdAt');
-//   var monthAgo =  moment().subtract(30, 'days').toDate();
-//   var weekAgo =  moment().subtract(7, 'days').toDate();
-//   var dayAgo = moment().subtract(24, 'hours').toDate();
-//   var hourAgo = moment().subtract(1, 'hours').toDate();
-//   var minuteAgo = moment().subtract(1, 'minutes').toDate();
+//   const uploads = await Upload.find({}).select('createdAt')
+//   var monthAgo =  moment().subtract(30, 'days').toDate()
+//   var weekAgo =  moment().subtract(7, 'days').toDate()
+//   var dayAgo = moment().subtract(24, 'hours').toDate()
+//   var hourAgo = moment().subtract(1, 'hours').toDate()
+//   var minuteAgo = moment().subtract(1, 'minutes').toDate()
 //
 //   const lastMonthUploads = _.filter(uploads, function(upload){
 //     return upload.createdAt > monthAgo
 //   })
 //
-//   console.log(lastMonthUploads.length);
+//   console.log(lastMonthUploads.length)
 //
 //
 // }
 //
-// testThing();
+// testThing()
 
-async function setDailyStats(){
-  if(logCaching == 'true'){
-    console.log('Setting daily stats');
+async function setDailyStats() {
+  if (logCaching == 'true') {
+    console.log('Setting daily stats')
 
-    console.log('Getting uploads');
+    console.log('Getting uploads')
   }
 
-  const uploads = await getAmountsPerPeriods(Upload, 'uploads');
-  await redisClient.setAsync('dailyStatsUploads', JSON.stringify(uploads));
+  const uploads = await getAmountsPerPeriods(Upload, 'uploads')
+  await redisClient.setAsync('dailyStatsUploads', JSON.stringify(uploads))
 
-  if(logCaching == 'true'){
-    console.log('Uploads set, moving on');
+  if (logCaching == 'true') {
+    console.log('Uploads set, moving on')
 
-    console.log('Getting users');
+    console.log('Getting users')
   }
 
-  const users = await getAmountsPerPeriods(User, 'users');
-  await redisClient.setAsync('dailyStatsUsers', JSON.stringify(users));
+  const users = await getAmountsPerPeriods(User, 'users')
+  await redisClient.setAsync('dailyStatsUsers', JSON.stringify(users))
 
-  if(logCaching == 'true'){
-    console.log('Users set, moving on');
+  if (logCaching == 'true') {
+    console.log('Users set, moving on')
 
-    console.log('Getting subscriptions');
+    console.log('Getting subscriptions')
   }
 
-  const subscriptions = await getAmountsPerPeriods(Subscription, 'subscriptions');
-  await redisClient.setAsync('dailyStatsSubscriptions', JSON.stringify(subscriptions));
+  const subscriptions = await getAmountsPerPeriods(Subscription, 'subscriptions')
+  await redisClient.setAsync('dailyStatsSubscriptions', JSON.stringify(subscriptions))
 
-  if(logCaching == 'true'){
-    console.log('Subscriptions set, moving on');
+  if (logCaching == 'true') {
+    console.log('Subscriptions set, moving on')
 
-    console.log('Getting reacts');
+    console.log('Getting reacts')
   }
 
-  const reacts = await getAmountsPerPeriods(React, 'reacts');
-  await redisClient.setAsync('dailyStatsReacts', JSON.stringify(reacts));
+  const reacts = await getAmountsPerPeriods(React, 'reacts')
+  await redisClient.setAsync('dailyStatsReacts', JSON.stringify(reacts))
 
-  if(logCaching == 'true'){
-    console.log('Reacts set, moving on');
+  if (logCaching == 'true') {
+    console.log('Reacts set, moving on')
 
-    console.log('Getting searches');
+    console.log('Getting searches')
   }
 
-  const searches = await getAmountsPerPeriods(SearchQuery, 'searches');
-  await redisClient.setAsync('dailyStatsSearches', JSON.stringify(searches));
+  const searches = await getAmountsPerPeriods(SearchQuery, 'searches')
+  await redisClient.setAsync('dailyStatsSearches', JSON.stringify(searches))
 
-  if(logCaching == 'true'){
-    console.log('Searches set, moving on');
+  if (logCaching == 'true') {
+    console.log('Searches set, moving on')
 
-    console.log('Getting comments');
+    console.log('Getting comments')
   }
 
-  const comments = await getAmountsPerPeriods(Comment, 'comments');
-  await redisClient.setAsync('dailyStatsComments', JSON.stringify(comments));
+  const comments = await getAmountsPerPeriods(Comment, 'comments')
+  await redisClient.setAsync('dailyStatsComments', JSON.stringify(comments))
 
-  if(logCaching == 'true'){
-    console.log('Comments set, moving on');
+  if (logCaching == 'true') {
+    console.log('Comments set, moving on')
 
-    console.log('Getting views');
+    console.log('Getting views')
   }
 
-  const views = await getAmountsPerPeriods(View, 'views');
+  const views = await getAmountsPerPeriods(View, 'views')
 
-  await redisClient.setAsync('dailyStatsViews', JSON.stringify(views));
+  await redisClient.setAsync('dailyStatsViews', JSON.stringify(views))
 
-  if(logCaching == 'true'){
-    console.log('Views set, moving on');
+  if (logCaching == 'true') {
+    console.log('Views set, moving on')
 
-    console.log('Getting siteVisits');
+    console.log('Getting siteVisits')
   }
 
-  const siteVisits = await getAmountsPerPeriods(SiteVisit, 'siteVisits');
-  await redisClient.setAsync('dailyStatsSiteVisits', JSON.stringify(siteVisits));
+  const siteVisits = await getAmountsPerPeriods(SiteVisit, 'siteVisits')
+  await redisClient.setAsync('dailyStatsSiteVisits', JSON.stringify(siteVisits))
 
-  if(logCaching == 'true'){
-    console.log('SiteVisit set, moving on');
+  if (logCaching == 'true') {
+    console.log('SiteVisit set, moving on')
 
-    console.log('Set daily stats');
+    console.log('Set daily stats')
   }
 
 }
@@ -224,10 +223,10 @@ async function setDailyStats(){
 module.exports = {
   setDailyStats,
   setIndexValues
-};
+}
 
-// setDailyStats();
+// setDailyStats()
 // setInterval(function(){
-//   setDailyStats();
-// }, 1000 * 60 * 30);
+//   setDailyStats()
+// }, 1000 * 60 * 30)
 //

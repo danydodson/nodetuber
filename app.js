@@ -106,7 +106,7 @@ if (cluster.isMaster) {
     mongoose.connect(mongoUri, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      useCreateIndex:true,
+      useCreateIndex: true,
       // reconnectTries: Number.MAX_VALUE
       keepAlive: true
     })
