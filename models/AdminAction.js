@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const javascriptTimeAgo = require('javascript-time-ago');
-javascriptTimeAgo.locale(require('javascript-time-ago/locales/en'));
-require('javascript-time-ago/intl-messageformat-global');
-require('intl-messageformat/dist/locale-data/en');
-const timeAgoEnglish = new javascriptTimeAgo('en-US');
+const javascriptTimeAgo = require('javascript-time-ago')
+javascriptTimeAgo.locale(require('javascript-time-ago/locales/en'))
+require('javascript-time-ago/intl-messageformat-global')
+require('intl-messageformat/dist/locale-data/en')
+const timeAgoEnglish = new javascriptTimeAgo('en-US')
 
 /**
  * Allows for an audit of actions taken by admin
@@ -36,15 +36,15 @@ const adminActionSchema = new mongoose.Schema({
     ref: 'Comment'
   }],
   note: String,
-  data : {
+  data: {
     type: mongoose.Schema.Types.Mixed
   }
-}, { timestamps: true });
+}, { timestamps: true })
 
-adminActionSchema.virtual('timeAgo').get(function(){
-  return timeAgoEnglish.format( new Date(this.createdAt) );
-});
+adminActionSchema.virtual('timeAgo').get(function () {
+  return timeAgoEnglish.format(new Date(this.createdAt))
+})
 
-const AdminAction = mongoose.model('AdminAction', adminActionSchema);
+const AdminAction = mongoose.model('AdminAction', adminActionSchema)
 
-module.exports = AdminAction;
+module.exports = AdminAction

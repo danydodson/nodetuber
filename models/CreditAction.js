@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const javascriptTimeAgo = require('javascript-time-ago');
-javascriptTimeAgo.locale(require('javascript-time-ago/locales/en'));
-require('javascript-time-ago/intl-messageformat-global');
-require('intl-messageformat/dist/locale-data/en');
-const timeAgoEnglish = new javascriptTimeAgo('en-US');
+const javascriptTimeAgo = require('javascript-time-ago')
+javascriptTimeAgo.locale(require('javascript-time-ago/locales/en'))
+require('javascript-time-ago/intl-messageformat-global')
+require('intl-messageformat/dist/locale-data/en')
+const timeAgoEnglish = new javascriptTimeAgo('en-US')
 
 /**
  * TODO: Fix this
@@ -38,12 +38,12 @@ const creditActionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Upload'
   }
-}, { timestamps: true });
+}, { timestamps: true })
 
-creditActionSchema.virtual('timeAgo').get(function(){
-  return timeAgoEnglish.format( new Date(this.createdAt) );
-});
+creditActionSchema.virtual('timeAgo').get(function () {
+  return timeAgoEnglish.format(new Date(this.createdAt))
+})
 
-const CreditAction = mongoose.model('CreditAction', creditActionSchema);
+const CreditAction = mongoose.model('CreditAction', creditActionSchema)
 
-module.exports = CreditAction;
+module.exports = CreditAction

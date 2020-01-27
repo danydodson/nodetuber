@@ -23,7 +23,7 @@ You can get an instance up instantly using one-click deployment with Heroku belo
 - [Redis](https://redis.io/download)
 - [ffmpeg](https://www.ffmpeg.org/download.html)
 
-See instructions on installing these prerequisities for both [OS X](https://github.com/mayeaux/nodetube/wiki/Installation-Instructions---OS-X) and [Linux](https://github.com/mayeaux/nodetube/wiki/Installation-Instructions---Linux). There are also [Docker](https://github.com/mayeaux/nodetube/wiki/Docker) instructions if that's your thing.
+See instructions on installing these prerequisites for both [OS X](https://github.com/mayeaux/nodetube/wiki/Installation-Instructions---OS-X) and [Linux](https://github.com/mayeaux/nodetube/wiki/Installation-Instructions---Linux). There are also [Docker](https://github.com/mayeaux/nodetube/wiki/Docker) instructions if that's your thing.
 
 Once Prerequisites Are Installed
 ---------------
@@ -102,6 +102,15 @@ You may also be interested in [videodownloader](https://github.com/mayeaux/video
 
 Don't forget to join the open-source community developing NodeTube on [Discord](https://discord.gg/ejGah8H), [Riot.im](https://riot.im/app/#/room/#nodetube:matrix.org) and [Reddit](https://reddit.com/r/nodetube)
 
+### Dependencies
+
+- apicache backblaze-b2 bcrypt-nodejs bluebird body-parser bower captchapng chalk cheerio clockwork clone compression concat-files connect-mongo connect-multiparty connect-timeout cors cpy-cli ddos dotenv easy-backblaze email-validator errorhandler express express-flash express-ipfilter express-session express-status-monitor express-useragent express-validator fbgraph fluent-ffmpeg forever formidable fs-extra github heroku-ssl-redirect intl-messageformat ipstack javascript-time-ago lastfm lob lodash lusca mail-listener2 mkdirp moment mongoose mongoose-unique-validator morgan multer multiparty mv ngrok node-cache node-ffprobe node-sass node-sass-middleware nodemailer nodemailer-mailgun-transport nodemon object-sizeof passport passport-facebook passport-google-oauth passport-local passport-oauth passport-openid passport-twitter passport-youtube-v3 paypal-rest-sdk pug randomstring recaptcha2 redis request request-promise serve-favicon shelljs stripe tumblr.js twilio twit validator winston ws youtube-dl youtube-node
+
+- replace bcrypt-nodejs with (bcryptjs) 
+
+## Dev-Dependencies
+
+- chai eslint eslint-config-airbnb-base eslint-plugin-chai-friendly eslint-plugin-import mocha rewire sinon sinon-mongoose supertest
 
 License
 -------

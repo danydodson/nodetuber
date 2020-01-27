@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const siteVisitSchema = new mongoose.Schema({
   user: {
@@ -22,17 +22,17 @@ const siteVisitSchema = new mongoose.Schema({
     default: 1
   },
 
-  doneFraud : {
+  doneFraud: {
     type: Boolean,
     default: false
   },
 
-  filter : {
+  filter: {
     type: String,
     default: 'allAges'
   },
 
-  blocked : {
+  blocked: {
     type: Boolean
   },
   defaultQuality: {
@@ -41,11 +41,11 @@ const siteVisitSchema = new mongoose.Schema({
     default: 'low'
   }
 
-}, { timestamps: true });
+}, { timestamps: true })
 
-const SiteVisit = mongoose.model('SiteVisit', siteVisitSchema);
+const SiteVisit = mongoose.model('SiteVisit', siteVisitSchema)
 
-module.exports = SiteVisit;
+module.exports = SiteVisit
 
 // is there a req.user?
 //   if so, find all the siteVisit for user, does everything match? if so, increment
@@ -61,7 +61,7 @@ module.exports = SiteVisit;
 //   platform: useragent.platform,
 //   geoIp: useragent.geoIp,
 //   trueStatements
-// };
+// }
 
 // https://github.com/bluesmoon/node-geoip
 // optionally : block tor

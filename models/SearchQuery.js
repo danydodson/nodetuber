@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const SearchQuerySchema = new mongoose.Schema({
   query: String,
@@ -7,8 +7,8 @@ const SearchQuerySchema = new mongoose.Schema({
     ref: 'User'
   }
 
-}, { timestamps: true });
+}, { timestamps: true })
 
-const SearchQuery = mongoose.model('SearchQuery', SearchQuerySchema);
+const SearchQuery = mongoose.model('SearchQuery', SearchQuerySchema)
 
-module.exports = SearchQuery;
+module.exports = SearchQuery

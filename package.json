@@ -9,7 +9,7 @@
   "engines": {
     "node": "8.3.0"
   },
-  "author": "Anthony Mayfield",
+  "author": "Dany Dodson",
   "license": "MIT",
   "scripts": {
     "start": "node --max-old-space-size=4096 app.js",
@@ -82,7 +82,7 @@
     "ngrok": "^3.2.2",
     "node-cache": "^4.2.1",
     "node-ffprobe": "^1.2.2",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "node-sass-middleware": "^0.11.0",
     "nodemailer": "^3.1.7",
     "nodemailer-mailgun-transport": "^1.4.0",

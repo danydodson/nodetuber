@@ -1,13 +1,13 @@
-const bcrypt = require('bcrypt-nodejs');
-const crypto = require('crypto');
-const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
-var Schema = mongoose.Schema;
+const bcrypt = require('bcrypt-nodejs')
+const crypto = require('crypto')
+const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
+var Schema = mongoose.Schema
 
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   emailConfirmed: { type: Boolean, default: false },
-  emailConfirmationToken : String,
+  emailConfirmationToken: String,
   emailConfirmationExpires: String,
 
   password: String,
@@ -27,14 +27,14 @@ const userSchema = new mongoose.Schema({
     default: false
   },
 
-  userUploadServer: { type: String, enum: ['uploads1', 'uploads3' ] },
+  userUploadServer: { type: String, enum: ['uploads1', 'uploads3'] },
 
   usedUploadServers: Array,
 
-  channelName: { type: String  },
+  channelName: { type: String },
   channelDescription: { type: String },
 
-  channelLocation : { type: String },
+  channelLocation: { type: String },
 
   youtubeChannelId: String,
   youtubeUsername: String,
@@ -60,7 +60,7 @@ const userSchema = new mongoose.Schema({
   }],
 
   // privileges
-  privs : {
+  privs: {
     autoVisibleUpload: {
       type: Boolean,
       default: false
@@ -81,7 +81,7 @@ const userSchema = new mongoose.Schema({
       type: Boolean,
       default: false
     },
-    uploadSize : {
+    uploadSize: {
       type: Number,
       default: 500
     },
@@ -91,7 +91,7 @@ const userSchema = new mongoose.Schema({
     }
   },
 
-  userSettings : {
+  userSettings: {
     mirrorOn: {
       type: Boolean,
       default: false
@@ -150,12 +150,12 @@ const userSchema = new mongoose.Schema({
     default: 'free'
   },
 
-  unseenSubscriptionUploads : {
+  unseenSubscriptionUploads: {
     type: Number,
     default: 0
   },
 
-  curated : {
+  curated: {
     type: Boolean,
     default: false
   },
@@ -165,7 +165,7 @@ const userSchema = new mongoose.Schema({
   },
 
   // amount of usd credits in cents
-  credit : {
+  credit: {
     type: Number,
     default: 0
   },
@@ -186,49 +186,49 @@ const userSchema = new mongoose.Schema({
     ref: 'User'
   }]
 
-}, { timestamps: true, minimize: false });
+}, { timestamps: true, minimize: false })
 
 /**
  * Password hash middleware.
  */
-userSchema.pre('save', function save(next){
-  const user = this;
-  if(!user.isModified('password')){ return next(); }
+userSchema.pre('save', function save(next) {
+  const user = this
+  if (!user.isModified('password')) { return next() }
   bcrypt.genSalt(10, (err, salt) => {
-    if(err){ return next(err); }
+    if (err) { return next(err) }
     bcrypt.hash(user.password, salt, null, (err, hash) => {
-      if(err){ return next(err); }
-      user.password = hash;
-      next();
-    });
-  });
-});
+      if (err) { return next(err) }
+      user.password = hash
+      next()
+    })
+  })
+})
 
 /**
  * Helper method for validating user's password.
  */
-userSchema.methods.comparePassword = function comparePassword(candidatePassword, cb){
+userSchema.methods.comparePassword = function comparePassword(candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    cb(err, isMatch);
-  });
-};
+    cb(err, isMatch)
+  })
+}
 
 /**
  * Helper method for getting user's gravatar.
  */
-userSchema.methods.gravatar = function gravatar(size){
-  if(!size){
-    size = 200;
+userSchema.methods.gravatar = function gravatar(size) {
+  if (!size) {
+    size = 200
   }
-  if(!this.email){
-    return`https://gravatar.com/avatar/?s=${size}&d=retro`;
+  if (!this.email) {
+    return `https://gravatar.com/avatar/?s=${size}&d=retro`
   }
-  const md5 = crypto.createHash('md5').update(this.email).digest('hex');
-  return`https://gravatar.com/avatar/${md5}?s=${size}&d=retro`;
-};
+  const md5 = crypto.createHash('md5').update(this.email).digest('hex')
+  return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`
+}
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema)
 
-userSchema.plugin(uniqueValidator);
+userSchema.plugin(uniqueValidator)
 
-module.exports = User;
+module.exports = User

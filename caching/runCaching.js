@@ -30,7 +30,7 @@ mongoose.Promise = global.Promise
 
 mongoose.Promise = global.Promise
 mongoose.connect(database, {
-  useCreateIndex:true,
+  useCreateIndex: true,
   // reconnectTries: Number.MAX_VALUE
   useNewUrlParser: true,
   useUnifiedTopology: true,

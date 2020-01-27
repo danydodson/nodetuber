@@ -20,7 +20,7 @@ mongoose.Promise = global.Promise
 
 mongoose.Promise = global.Promise
 mongoose.connect(mongoUri, {
-  useCreateIndex:true,
+  useCreateIndex: true,
   // reconnectTries: Number.MAX_VALUE,
   keepAlive: true,
   useMongoClient: true
